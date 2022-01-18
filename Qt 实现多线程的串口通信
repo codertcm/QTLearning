@@ -1,0 +1,20 @@
+#include "serialport.h"
+
+public slots:
+  void on_receive(QByteArray tmpdata);
+private:
+  SerialPort *local_serial;
+
+
+
+//构造函数中
+local_serial = new SerialPort();
+connect(ui->pushButton, SIGNAL(clicked()), local_serial, SLOT(write_data())，Qt::QueuedConnection);
+connect(local_serial, SIGNAL(receive_data(QByteArray)), this, SLOT(on_receive(QByteArray)), Qt::QueuedConnection);
+
+//on_receive槽函数
+void Widget::on_receive(QByteArray tmpdata)
+{
+    ui->textEdit->append(tmpdata);
+}
+
